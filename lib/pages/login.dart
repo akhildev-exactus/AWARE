@@ -41,12 +41,12 @@ class _loginPageState extends State<loginPage> {
       child: Center(
         child: Container(
           width: 200,
-          height: 200,
+          height: 175,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: EdgeInsets.fromLTRB(15.0, 50.0, 0.0, 0.0),
+                padding: EdgeInsets.fromLTRB(15.0, 50.0, 0.0, 10.0),
                 child: Text(
                   'Aware',
                   style: TextStyle(
@@ -69,6 +69,9 @@ class _loginPageState extends State<loginPage> {
 
   Widget _useridField() {
     return TextFormField(
+      style: TextStyle(
+        fontFamily: 'Montserrat',
+      ),
       decoration: InputDecoration(
           border: InputBorder.none,
           fillColor: Colors.lightBlue[50],
@@ -86,6 +89,9 @@ class _loginPageState extends State<loginPage> {
 
   Widget _passwordField() {
     return TextFormField(
+      style: TextStyle(
+        fontFamily: 'Montserrat',
+      ),
       obscureText: true,
       initialValue: null,
       decoration: InputDecoration(
@@ -149,7 +155,8 @@ class _loginPageState extends State<loginPage> {
         ),
         child: Text(
           'Sign In',
-          style: TextStyle(fontSize: 17, color: Colors.white),
+          style: TextStyle(
+              fontFamily: 'Montserrat', fontSize: 17, color: Colors.white),
         ),
         color: Colors.green,
         onPressed: () async {
@@ -206,12 +213,12 @@ class _loginPageState extends State<loginPage> {
     return Scaffold(
         body: Container(
       // margin: EdgeInsets.all(5),
-      padding: EdgeInsets.only(bottom: 30, left: 10, right: 10, top: 20),
-      // padding: EdgeInsets.all(10.0),
+      // padding: EdgeInsets.only(bottom: 30, left: 10, right: 10, top: 20),
+      padding: EdgeInsets.all(10.0),
       child: Stack(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 30),
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 50),
             child: SingleChildScrollView(
               child: Form(
                 // --------------------Key----------------------
@@ -225,9 +232,6 @@ class _loginPageState extends State<loginPage> {
                     _useridPasswordWidget(),
                     SizedBox(height: 30),
                     _submitButton(),
-                    // SizedBox(
-                    //   height: 40,
-                    // ),
                     _bottom_data(),
                   ],
                 ),
@@ -241,21 +245,21 @@ class _loginPageState extends State<loginPage> {
 
   _bottom_data() {
     return Container(
-      padding: EdgeInsets.only(top: 70),
+      padding: EdgeInsets.only(top: 50),
       child: Center(
         child: Container(
           width: 200,
-          height: 25,
+          height: 50,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
+                padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
                 child: Text(
                   // year.month.ver.day
                   '\u00a9 2023 by EXACTUS SYSTEMS\nver 20.10.1.24',
                   style: TextStyle(
-                      color: Colors.blue[700],
+                      color: Colors.black,
                       fontFamily: 'Montserrat',
                       fontSize: 10.0,
                       fontWeight: FontWeight.bold),
