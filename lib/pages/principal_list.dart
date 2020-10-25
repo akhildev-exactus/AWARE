@@ -64,6 +64,7 @@ class _principleListState extends State<principleList> {
       padding: const EdgeInsets.all(8.0),
       child: TextField(
         decoration: InputDecoration(hintText: 'Search...'),
+        style: TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.bold),
         onChanged: (text) {
           text = text.toLowerCase();
           setState(() {
@@ -85,11 +86,15 @@ class _principleListState extends State<principleList> {
       child: ListTile(
         title: Text(
           _datasForDisplay[index].prinname,
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontFamily: 'Montserrat',
+              fontSize: 20,
+              fontWeight: FontWeight.bold),
         ),
         subtitle: Text(
           _datasForDisplay[index].princode,
           style: TextStyle(
+              fontFamily: 'Montserrat',
               fontSize: 15,
               color: Colors.deepOrange.shade700,
               fontWeight: FontWeight.bold),
