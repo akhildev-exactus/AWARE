@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 import 'stock_Details_data.dart';
 
-class stock_detail_prod extends StatefulWidget {
+class stock_prod_details extends StatefulWidget {
   final String prin_code, prod_code, prod_name, model, pqty, puom, lqty, luom;
 
-  const stock_detail_prod(this.prin_code, this.prod_code, this.prod_name,
+  const stock_prod_details(this.prin_code, this.prod_code, this.prod_name,
       this.model, this.pqty, this.puom, this.lqty, this.luom);
+
   @override
-  _stock_detail_prodState createState() => _stock_detail_prodState();
+  _stock_prod_detailsState createState() => _stock_prod_detailsState();
 }
 
-class _stock_detail_prodState extends State<stock_detail_prod> {
+class _stock_prod_detailsState extends State<stock_prod_details> {
   List<Stock_details_data> _datas = List<Stock_details_data>();
 
   Future<List<Stock_details_data>> fetchDatas(
@@ -33,9 +34,6 @@ class _stock_detail_prodState extends State<stock_detail_prod> {
   }
 
   @override
-  bool get sizedByParent => true;
-
-  @override
   void initState() {
     fetchDatas(widget.prin_code, widget.prod_code).then((value) {
       setState(() {
@@ -47,41 +45,52 @@ class _stock_detail_prodState extends State<stock_detail_prod> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Stock Details ",
-            style: TextStyle(
-                fontFamily: 'Montserrat', fontWeight: FontWeight.bold),
-          ),
-          backgroundColor: Color.fromRGBO(59, 87, 110, 1.0),
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _topData(),
-            SizedBox(
-              height: 15,
+    return MaterialApp(
+        title: 'Aware APP | Stock Details',
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+            appBar: AppBar(
+              title: Text(
+                "Stock Details ",
+                style: TextStyle(
+                    fontFamily: 'Montserrat', fontWeight: FontWeight.bold),
+              ),
+              backgroundColor: Color.fromRGBO(59, 87, 110, 1.0),
             ),
-            Expanded(
-                child: ListView.builder(
-              itemBuilder: (context, index) {
-                return index == 0
-                    ? _list_head(index)
-                    : _list_details(index - 1);
-              },
-              itemCount: _datas.length + 1,
-            ))
-          ],
-        ),
-      ),
-    );
+            body: Padding(
+              padding: EdgeInsets.all(5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  _topData(),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Expanded(
+                      child: Padding(
+                    padding: EdgeInsets.fromLTRB(
+                      2.0,
+                      0.0,
+                      2.0,
+                      0.0,
+                    ),
+                    child: ListView.builder(
+                      itemBuilder: (context, index) {
+                        return index == 0
+                            ? _headerTable(index)
+                            : _dataTable(index - 1);
+                      },
+                      itemCount: _datas.length + 1,
+                    ),
+                  ))
+                ],
+              ),
+            )));
   }
 
   _topData() {
     return Padding(
-      padding: EdgeInsets.only(bottom: 0.0, top: 20, left: 20, right: 20),
+      padding: EdgeInsets.only(bottom: 0.0, top: 20, left: 10, right: 15),
       child: Row(
         children: [
           Expanded(
@@ -105,7 +114,7 @@ class _stock_detail_prodState extends State<stock_detail_prod> {
                   style: TextStyle(
                       fontFamily: 'Montserrat',
                       color: Colors.black,
-                      fontSize: 16),
+                      fontSize: 15),
                 ),
                 SizedBox(
                   height: 10,
@@ -116,7 +125,7 @@ class _stock_detail_prodState extends State<stock_detail_prod> {
                     style: TextStyle(
                         fontFamily: 'Montserrat',
                         color: Colors.black,
-                        fontSize: 16),
+                        fontSize: 15),
                   ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -135,7 +144,6 @@ class _stock_detail_prodState extends State<stock_detail_prod> {
                       _align(
                         widget.luom,
                       ),
-                    // Text("P_qty P_uom L_qty L_uom")
                   ],
                 )
               ],
@@ -146,91 +154,79 @@ class _stock_detail_prodState extends State<stock_detail_prod> {
     );
   }
 
-  _list_head(index) {
-    return SingleChildScrollView(
-      child: DataTable(
-        columns: <DataColumn>[
-          DataColumn(label: _textFile("COO \n\nEXPDATE", 13, Colors.red)),
-          DataColumn(label: _textFile("LOT NO \n\nDOC_REF", 13, Colors.red)),
-          DataColumn(
-              label: _textFile("Qty\n\nCTN \t\t\t\t PCS", 13, Colors.red)),
-        ],
-        headingRowHeight: 80.3,
-        // horizontalMargin: 8,
-
-        rows: <DataRow>[
-          DataRow(cells: <DataCell>[
-            DataCell(Container(
-              width: 70,
-              child: Text(""),
-            )),
-            DataCell(Container(
-              width: 55,
-              child: Text(""),
-            )),
-            DataCell(
-              Text(""),
-            ),
-          ])
-        ],
-        dataRowHeight: 1.3,
-        // horizontalMargin: 30,
+  _headerTable(index) {
+    return Table(
+      border: TableBorder.symmetric(
+        inside: BorderSide(width: 0.5, color: Colors.red[300]),
+        outside: BorderSide(width: 3),
       ),
+      columnWidths: {
+        0: FractionColumnWidth(0.20),
+        1: FractionColumnWidth(0.50),
+        2: FractionColumnWidth(0.25)
+      },
+      children: [
+        TableRow(children: [
+          _tablecolumns("COO"),
+          _tablecolumns("LOT_NO"),
+          _tablecolumns("QUANTITY"),
+        ]),
+        TableRow(children: [
+          _tablecolumns("EXP_DATE"),
+          _tablecolumns("DOC_REF"),
+          _tablecolumns("CTN  \t|\t PCS"),
+        ]),
+      ],
     );
   }
 
-  _list_details(index) {
+  _dataTable(index) {
     var coo = _datas[index].org_country;
     var lot_no = _datas[index].lot_no;
-    var date = _datas[index].date.toString().split("T");
+    var date = _datas[index].date.toString();
     var doc_ref = _datas[index].doc_ref;
     var pqty = _datas[index].p_qty;
     var lqty = _datas[index].l_qty;
     return SingleChildScrollView(
-      child: DataTable(
-        columns: <DataColumn>[
-          DataColumn(label: Text("")),
-          DataColumn(label: Text("")),
-          DataColumn(label: Text("")),
-        ],
-        dividerThickness: 8,
-        headingRowHeight: 5.3,
-        rows: <DataRow>[
-          DataRow(cells: <DataCell>[
-            DataCell(Container(
-              width: 61,
-              child: _textFile(coo + " \n\n" + date[0], 12, Colors.black),
-            )),
-            DataCell(
-              Container(
-                width: 78,
-                child: _textFile(
-                    lot_no.toString() + "\n\n" + doc_ref.toString(),
-                    12,
-                    Colors.black),
-              ),
+      child: Table(
+        border: TableBorder.lerp(
+            TableBorder(
+                verticalInside: BorderSide(width: 1, color: Colors.red),
+                horizontalInside: BorderSide(width: 1, color: Colors.red),
+                left: BorderSide(color: Colors.black, width: 6),
+                right: BorderSide(color: Colors.black, width: 6)),
+            TableBorder(
+              bottom: BorderSide(width: 8, color: Colors.indigoAccent),
             ),
-            DataCell(_textFile(
-                pqty.toString() + "\t\t\t\t\t\t\t\t\t\t\t " + lqty.toString(),
-                12,
-                Colors.black)),
-          ])
+            0.5),
+        columnWidths: {
+          0: FractionColumnWidth(0.20),
+          1: FractionColumnWidth(0.50),
+          2: FractionColumnWidth(0.25)
+        },
+        children: [
+          TableRow(children: [
+            _tabledata(coo),
+            _tabledata(lot_no),
+            _tabledata(" "),
+          ]),
+          TableRow(children: [
+            _tabledata(date),
+            _tabledata(doc_ref),
+            if (_datas[index].p_uom == "CTN" && _datas[index].l_uom == "PCS")
+              _tabledata(pqty.toString() + "  \t\t|\t\t " + lqty.toString()),
+            if (_datas[index].p_uom == "CTN" && _datas[index].l_uom == "CTN")
+              _tabledata(pqty.toString() + "  \t\t|\t\t " + lqty.toString()),
+            if (_datas[index].p_uom == "PCS" && _datas[index].l_uom == "CTN")
+              _tabledata(lqty.toString() + "  \t\t|\t\t " + pqty.toString()),
+            // if (_datas[index].p_uom == "PCS" && _datas[index].l_uom == "PCS")
+            if (_datas[index].p_uom == "PCS" && _datas[index].l_uom == "PCS" ||
+                _datas[index].p_uom.startsWith("PR") ||
+                _datas[index].p_uom.startsWith("B"))
+              _tabledata(lqty.toString() + "  \t\t|\t\t " + pqty.toString()),
+          ]),
         ],
-        // horizontalMargin: 9,
-        dataRowHeight: 80.3,
       ),
-    );
-  }
-
-  _textFile(_text, double size, clr) {
-    return Text(
-      _text,
-      style: TextStyle(
-        // fontFamily: 'Montserrat',
-        color: clr,
-        fontSize: size,
-      ),
-      textAlign: TextAlign.center,
     );
   }
 
@@ -243,8 +239,37 @@ class _stock_detail_prodState extends State<stock_detail_prod> {
           fontSize: 14,
           fontWeight: FontWeight.bold,
         ),
-        // textAlign: TextAlign.center,
       ),
     );
+  }
+
+  _tablecolumns(String text) {
+    return TableCell(
+        child: SizedBox(
+            height: 35,
+            child: Center(
+              child: Text(text,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13)),
+            )));
+  }
+
+  _tabledata(String text) {
+    return TableCell(
+        child: SizedBox(
+            height: 35,
+            child: Center(
+                child: Text(
+              text,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.normal,
+                  fontSize: 12,
+                  color: Colors.black),
+            ))));
   }
 }
