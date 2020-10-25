@@ -1,4 +1,5 @@
-import 'package:aware_app/pages/stock_details_prod.dart';
+import 'package:aware_app/pages/stock_prod_details.dart';
+import 'package:aware_app/pages/stock_details/stock_details_prod.dart';
 import 'stock_data.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -69,6 +70,7 @@ class StockReportState extends State<StockReport> {
       padding: const EdgeInsets.all(8.0),
       child: TextField(
         decoration: InputDecoration(hintText: 'Search...'),
+        style: TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.bold),
         onChanged: (text) {
           text = text.toUpperCase();
           setState(() {
@@ -94,7 +96,10 @@ class StockReportState extends State<StockReport> {
       child: ListTile(
         title: Text(
           prodname,
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontFamily: 'Montserrat',
+              fontSize: 20,
+              fontWeight: FontWeight.bold),
         ),
         subtitle: Column(
           children: <Widget>[
@@ -102,7 +107,10 @@ class StockReportState extends State<StockReport> {
               alignment: Alignment.centerLeft,
               child: Text(
                 prodcode,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold),
               ),
             ),
             if (model != null)
@@ -110,7 +118,10 @@ class StockReportState extends State<StockReport> {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   model.toString(),
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
             Row(
@@ -145,7 +156,7 @@ class StockReportState extends State<StockReport> {
               //     builder: (context) => stockDetailsReport(widget._prin_code,
               //         prodcode, prodname, model, pqty, puom, lqty, luom)));
               MaterialPageRoute(
-                  builder: (context) => stock_detail_prod(widget._prin_code,
+                  builder: (context) => stock_prod_details(widget._prin_code,
                       prodcode, prodname, model, pqty, puom, lqty, luom)));
         },
       ),
@@ -156,7 +167,10 @@ class StockReportState extends State<StockReport> {
     return new Align(
       child: Text(
         _text,
-        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        style: TextStyle(
+            fontFamily: 'Montserrat',
+            fontSize: 15,
+            fontWeight: FontWeight.bold),
       ),
     );
   }
