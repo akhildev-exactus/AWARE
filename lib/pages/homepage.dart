@@ -44,7 +44,12 @@ class _MenuState extends State<Menu> {
                     children: <Widget>[
                       Icon(Icons.account_balance_wallet,
                           size: 70.0, color: Colors.red),
-                      Text("Stock Report", style: new TextStyle(fontSize: 17))
+                      Text(
+                        "Stock Report",
+                        style: new TextStyle(
+                            fontFamily: 'Montserrat', fontSize: 15),
+                        textAlign: TextAlign.center,
+                      )
                     ],
                   ),
                 ),
@@ -64,7 +69,12 @@ class _MenuState extends State<Menu> {
                     children: <Widget>[
                       Icon(Icons.assignment,
                           size: 70.0, color: Colors.lightBlue),
-                      Text("GRN Report", style: new TextStyle(fontSize: 17))
+                      Text(
+                        "GRN Report",
+                        style: new TextStyle(
+                            fontFamily: 'Montserrat', fontSize: 15),
+                        textAlign: TextAlign.center,
+                      )
                     ],
                   ),
                 ),
@@ -81,8 +91,12 @@ class _MenuState extends State<Menu> {
                     children: <Widget>[
                       Icon(Icons.account_balance,
                           size: 70.0, color: Colors.brown),
-                      Text("Transaction Report",
-                          style: new TextStyle(fontSize: 17))
+                      Text(
+                        "Transaction Report",
+                        style: new TextStyle(
+                            fontFamily: 'Montserrat', fontSize: 15),
+                        textAlign: TextAlign.center,
+                      )
                     ],
                   ),
                 ),
